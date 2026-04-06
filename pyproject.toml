@@ -1,0 +1,9 @@
+name = "example_package_YOUR_USERNAME_HERE"
+version = "1.0.0"
+authors = [
+  { name="Rares Badita", email="myonlybaraoc@gmail.com" },
+]
+description = "A site accessibilty testing script"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
