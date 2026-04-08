@@ -1,9 +1,22 @@
-name = "example_package_YOUR_USERNAME_HERE"
-version = "1.0.0"
+[project]
+name = "selenium_axe_accessibility"
+version = "0.0.1"
 authors = [
   { name="Rares Badita", email="myonlybaraoc@gmail.com" },
 ]
-description = "A site accessibilty testing script"
-readme = "README.md"
+description = "A site accessibilty testing package"
 requires-python = ">=3.9"
+dependencies = [
+  "selenium>=4.41",
+  "axe_selenium_python>=2.1"
+]
+readme = "README.md"
 license = "MIT"
+license-files = ["LICENSE"]
+
+[tool.setuptools.packages.find]
+include = ["selenium_axe_accessibility*"]
+namespaces = true
+
+[project.urls]
+Homepage = "https://github.com/WhyNotRaresh/Python-accessibility"

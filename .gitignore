@@ -1,1 +1,7 @@
 results/
+dist/
+build/
+selenium_axe_accessibility.egg-info/
+selenium_axe_accessibility/__pycache__
+
+configs.json

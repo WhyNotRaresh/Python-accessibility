@@ -7,7 +7,7 @@
         "If is_eulogin is set to false, then please provide <<url: /login/url>>, <<username_field: .CSS#selector>> and <<password_field: .CSS#selector>>"
     ],
 	"env": "http://localhost:8080/",
-	"langcode": "en",
+	"path_prefix": "en",
     "login": {
         "username": "USER",
         "password": "PASS",
