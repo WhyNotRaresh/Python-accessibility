@@ -1,8 +1,8 @@
+from selenium_axe_accessibility.writers.csv_writer import CSVWriter
+from selenium_axe_accessibility.writers.abstract_writer import AbstractWriter
 from selenium import webdriver
 from axe_selenium_python import Axe
-from . import writer
 import time
-import csv
 
 
 class Runner:
@@ -135,7 +135,7 @@ class Runner:
 	'''
 	Execute accesibility run.
 	'''
-	def exec(self):
+	def exec(self, writer:AbstractWriter = None):
 		self.spawn()
 
 		# Logging in with the user.
@@ -154,13 +154,10 @@ class Runner:
 		# Axe tool for accessibility.
 		axe_webtools = Axe(self.driver)
 
-		with open(writer.create_file_name(self.configs), 'w', newline='') as csv_result_file:
-			csv_result_file.write('sep=,\n')
+		if not writer:
+		 	writer = CSVWriter(self.configs['dir'], self.configs['login']['username'], self.configs['resolution'])
 
-			# CSV writer object.
-			csv_writer = csv.writer(csv_result_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-			csv_writer.writerow(['URL', 'Name', 'Impact', 'Count', 'HTML Target'])
-
+		with writer:
 			for path in self.configs['paths']:
 				url = self.form_url(path)
 
@@ -171,7 +168,7 @@ class Runner:
 					results = self.run_axe(axe_webtools)
 
 					for violation in results['violations']:
-						writer.wirte_result(csv_writer, violation, url)
+						writer.register_violation(violation, url)
 				except:
 					print('Error occured on url ' + url)
 
