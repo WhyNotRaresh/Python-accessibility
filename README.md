@@ -152,21 +152,6 @@ Wait until the current URL matches a given prefix.
 
 ---
 
-### `wait_for_element`
-
-Wait until an element is clickable.
-
-```python
-{ 'command': 'wait_for_element', 'selector': 'button#submit' }
-```
-
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `selector` | `str` | ✓ | CSS selector of the element to wait for |
-| `timeout` | `int` | | Maximum wait time in seconds. Defaults to `60` |
-
----
-
 ## Output
 
 Results are written to a CSV file in the configured `dir`. The file is named:
@@ -215,12 +200,12 @@ selenium_axe_accessibility.run_with_writer(config, MyWriter())
 
 ## Adding a custom command
 
-1. Create a new file in `selenium_axe_accessibility/commands/`, extending `AbstractCommand`:
+1. Create a class extending `AbstractCommand`:
 
 ```python
-from . import abstract_command
+from selenium_axe_accessibility.commands.abstract_command import AbstractCommand
 
-class MyCommand(abstract_command.AbstractCommand):
+class MyCommand(AbstractCommand):
     def __init__(self, options):
         self.my_option = options['my_option']
 
@@ -230,10 +215,12 @@ class MyCommand(abstract_command.AbstractCommand):
         pass
 ```
 
-2. Register it in `DefaultCommands` in `commands/__init__.py`:
+2. Register it before calling `run()`:
 
 ```python
-my_command = 'my_command.MyCommand'
+from selenium_axe_accessibility.commands import register_command
+
+register_command('my_command', 'my_module.MyCommand')
 ```
 
 3. Use it in your config:
@@ -242,4 +229,4 @@ my_command = 'my_command.MyCommand'
 { 'command': 'my_command', 'my_option': 'value' }
 ```
 
-Alternatively, skip step 2 and pass the full `'module.ClassName'` string directly as the `command` value.
+Alternatively, skip registration and pass the full `'module.ClassName'` string directly as the `command` value.
