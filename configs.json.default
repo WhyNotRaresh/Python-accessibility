@@ -1,22 +1,56 @@
 {
-    "dev_comments": [
-        "This element is ignored by the script. Just writing info for future self.",
-        "Env aliases: acc, prod, local (http://localhost:8080/)",
-        "Env formatting -> http://example.host.name/",
-        "For no login use <<login: false>>",
-        "If is_eulogin is set to false, then please provide <<url: /login/url>>, <<username_field: .CSS#selector>> and <<password_field: .CSS#selector>>"
-    ],
-	"env": "http://localhost:8080/",
-	"path_prefix": "en",
+    "env": "https://example.com/",
+    "path_prefix": "en",
+    "resolution": "1920,1080",
     "login": {
-        "username": "USER",
-        "password": "PASS",
-        "is_eulogin": true,
-        "continue_on_fail": false
+        "continue_on_fail": false,
+        "commands": [
+            {
+                "command": "go_to",
+                "path": "/login"
+            },
+            {
+                "command": "fill",
+                "selector": "input#username",
+                "value": "your-username"
+            },
+            {
+                "command": "fill",
+                "selector": "input#password",
+                "value": "your-password"
+            },
+            {
+                "command": "submit",
+                "selector": "input#password"
+            },
+            {
+                "command": "wait_for_url",
+                "url": "https://example.com/"
+            }
+        ]
     },
-	"dir": "./results",
-	"remove": [],
-	"paths": [
-        "/"
+    "dir": "./results",
+    "remove": [],
+    "commands": [
+        "/",
+        "/about",
+        {
+            "command": "go_to",
+            "url": "https://example.com/page-with-tabs"
+        },
+        {
+            "command": "click",
+            "selector": "button#tab-one"
+        },
+        {
+            "command": "run_axe"
+        },
+        {
+            "command": "click",
+            "selector": "button#tab-two"
+        },
+        {
+            "command": "run_axe"
+        }
     ]
 }
